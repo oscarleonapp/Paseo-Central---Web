@@ -70,12 +70,6 @@
     .kpi{display:grid;gap:6px}
     .kpi b{font-size:24px}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(108,193,107,.13);border:1px solid rgba(108,193,107,.35);font-weight:700}
-    /* Availability legend */
-    .legend{display:flex;gap:12px;flex-wrap:wrap}
-    .dot{width:12px;height:12px;border-radius:50%}
-    .ok{background:#5fd38b}
-    .hold{background:#c7b76a}
-    .sold{background:#7aa19a}
     /* Footer */
     footer{padding:40px 0;background:#160f0b;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)}
     /* Drawer (mobile) */
@@ -84,6 +78,45 @@
       #burger{display:inline-grid}
       .menu{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(20,13,9,.98);padding:16px;border-bottom:1px solid rgba(255,255,255,.08)}
       .menu.open{display:grid}
+    }
+
+    /* =========================================================
+       ACCESIBILIDAD: tema para secciones con fondo claro
+       Cumple WCAG AA/AAA en texto principal y enlaces
+       ========================================================= */
+    .on-light{
+      background:#ffffff !important;
+      color:#1a1a1a; /* ~12:1 contraste sobre blanco */
+      border-top:1px solid #ececec; /* separador sutil en claro */
+    }
+    .on-light h1,.on-light h2,.on-light h3{ color:#0f0f0f; }
+    .on-light .sub{ color:#444; }                      /* ~7:1 */
+    .on-light a{ color:#0d6b2a; }                      /* enlace oscuro accesible */
+    .on-light a:hover{ color:#0b5d24; }
+    .on-light .badge{
+      background:#eef7ee;
+      border-color:#9fd09f;
+      color:#0d3b19;
+    }
+    .on-light .icon{ background:#e9f3ea; }
+    .on-light input,
+    .on-light textarea{
+      background:#fff;
+      color:#1a1a1a;
+      border:1px solid #d2d2d2;
+    }
+    .on-light ::placeholder{ color:#6b6b6b; }
+
+    /* Las tarjetas oscuras mantienen buen contraste sobre fondo claro */
+    .on-light .card{
+      background: #17110d;              /* un poco más oscuro para 15:1 con texto claro */
+      border-color: rgba(0,0,0,.35);
+      color: #F5F3EF;
+    }
+    .on-light .card .sub{ color:#e0dbd2; }
+    .on-light .btn{
+      /* botón oscuro contrasta bien en fondo claro */
+      border-color: rgba(0,0,0,.25);
     }
   </style>
 </head>
@@ -107,7 +140,7 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero (oscuro) -->
   <section id="inicio" class="hero">
     <div class="container hero-grid">
       <div>
@@ -121,7 +154,7 @@
         </div>
       </div>
       <figure class="figure">
-        <!-- Reemplaza la imagen por fotografía del proyecto -->
+        <!-- Reemplaza con fotografía del proyecto -->
         <div class="map-sim">
           <small>Parque Nacional Mirador del Norte — entorno natural</small>
         </div>
@@ -129,8 +162,8 @@
     </div>
   </section>
 
-  <!-- Ubicación -->
-  <section id="ubicacion">
+  <!-- Ubicación (claro) -->
+  <section id="ubicacion" class="on-light">
     <div class="container grid cols-2">
       <div>
         <h2>Ubicación estratégica</h2>
@@ -149,12 +182,12 @@
           <div class="kpi"><b>🎓</b><span>Colegios y universidades</span></div>
           <div class="kpi"><b>⚽</b><span>Parques y esparcimiento</span></div>
         </div>
-        <p style="margin-top:12px;color:var(--muted)">Los tiempos referenciales incluyen conexiones a Circunvalación SD, Aeropuerto La Isabela y Centro Olímpico.</p>
+        <p class="sub" style="margin-top:12px">Los tiempos referenciales incluyen conexiones a Circunvalación SD, Aeropuerto La Isabela y Centro Olímpico.</p>
       </div>
     </div>
   </section>
 
-  <!-- Proximidades (ejemplos visibles) -->
+  <!-- Proximidades (oscuro) -->
   <section id="proximidades">
     <div class="container">
       <h2>Proximidades</h2>
@@ -170,8 +203,8 @@
     </div>
   </section>
 
-  <!-- Infraestructura -->
-  <section id="infraestructura">
+  <!-- Infraestructura (claro) -->
+  <section id="infraestructura" class="on-light">
     <div class="container">
       <h2>Infraestructura de calidad</h2>
       <p class="sub">Entrega con urbanización completa para elevar la calidad de vida y la sostenibilidad.</p>
@@ -210,7 +243,7 @@
     </div>
   </section>
 
-  <!-- Estilo de vida -->
+  <!-- Estilo de vida (oscuro) -->
   <section id="vida">
     <div class="container grid cols-2">
       <div>
@@ -233,15 +266,15 @@
     </div>
   </section>
 
-  <!-- Disponibilidad -->
-  <section id="disponibilidad">
+  <!-- Disponibilidad (claro) -->
+  <section id="disponibilidad" class="on-light">
     <div class="container">
       <h2>Disponibilidad de solares</h2>
       <p class="sub">Proyecto en ejecución por etapas. Cada solar deslindado y con certificado de título a nombre de Paseo Central, S.R.L.</p>
-      <div class="legend" role="list" aria-label="Leyenda de disponibilidad">
-        <span class="badge"><span class="dot ok"></span>Disponibles</span>
-        <span class="badge"><span class="dot hold"></span>Apartados</span>
-        <span class="badge"><span class="dot sold"></span>Vendidos</span>
+      <div class="badge" role="list" aria-label="Leyenda de disponibilidad" style="gap:14px;flex-wrap:wrap;display:inline-flex;align-items:center;padding:8px 12px;">
+        <span class="badge" style="margin-right:6px"><span class="dot ok"></span> Disponibles</span>
+        <span class="badge" style="margin-right:6px"><span class="dot hold"></span> Apartados</span>
+        <span class="badge"><span class="dot sold"></span> Vendidos</span>
       </div>
 
       <div class="grid cols-3" style="margin-top:18px">
@@ -256,7 +289,7 @@
             <li>50% a la firma (15 días).</li>
             <li>40% contra pago total.</li>
           </ul>
-          <small style="color:var(--muted)">Separación no reembolsable. Costos de transferencia a cargo del cliente.</small>
+          <small class="sub">Separación no reembolsable. Costos de transferencia a cargo del cliente.</small>
         </div>
         <div class="card">
           <b>Tipología de manzanas</b>
@@ -266,7 +299,7 @@
     </div>
   </section>
 
-  <!-- Desarrolladores -->
+  <!-- Desarrolladores (oscuro) -->
   <section id="desarrolladores">
     <div class="container grid cols-2">
       <div>
@@ -285,17 +318,25 @@
     </div>
   </section>
 
-  <!-- CTA / Contacto -->
-  <section id="contacto">
+  <!-- Contacto (claro) -->
+  <section id="contacto" class="on-light">
     <div class="container grid cols-2">
       <div>
         <h2>Agenda tu visita</h2>
         <p class="sub">Elige una inversión con visión de futuro, elige Paseo Central.</p>
         <form class="card" id="form">
-          <label>Nombre<br/><input required name="nombre" placeholder="Tu nombre" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
-          <label>Correo<br/><input required type="email" name="correo" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
-          <label>Teléfono<br/><input required name="telefono" placeholder="+1 (809) ..." style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
-          <label>Mensaje<br/><textarea name="mensaje" rows="4" placeholder="Quiero información de disponibilidad y precios." style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></textarea></label><br/>
+          <label>Nombre<br/>
+            <input required name="nombre" placeholder="Tu nombre" aria-label="Nombre">
+          </label><br/>
+          <label>Correo<br/>
+            <input required type="email" name="correo" placeholder="tucorreo@ejemplo.com" aria-label="Correo electrónico">
+          </label><br/>
+          <label>Teléfono<br/>
+            <input required name="telefono" placeholder="+1 (809) ..." aria-label="Teléfono">
+          </label><br/>
+          <label>Mensaje<br/>
+            <textarea name="mensaje" rows="4" placeholder="Quiero información de disponibilidad y precios." aria-label="Mensaje"></textarea>
+          </label><br/>
           <button class="btn" type="submit">Enviar consulta</button>
           <p id="status" aria-live="polite" style="margin:10px 0 0;color:var(--brand-2)"></p>
         </form>
@@ -353,6 +394,11 @@
       // Aquí podrías hacer fetch() a tu backend/automation
       document.getElementById('status').textContent = "¡Gracias! Hemos recibido tu consulta y te contactaremos pronto.";
       form.reset();
+    });
+
+    // Accesibilidad: si alguna sección tiene background blanco inline, aplicar tema on-light automáticamente
+    document.querySelectorAll('section[style*="background: #fff"], section[style*="background:#fff"]').forEach(s=>{
+      if(!s.classList.contains('on-light')) s.classList.add('on-light');
     });
   </script>
 </body>
