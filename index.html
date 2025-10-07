@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paseo Central — Desarrollo urbano en Santo Domingo Norte</title>
+  <meta name="description" content="Paseo Central: proyecto urbanístico con ubicación estratégica, infraestructura de calidad y cercanía al Parque Mirador del Norte en Santo Domingo Norte." />
+  <meta name="theme-color" content="#4C3A2F" />
+  <style>
+    :root{
+      --bg:#1f140f;         /* marrón oscuro del dossier */
+      --bg-2:#2b1c14;
+      --card:#241811;
+      --brand:#6CC16B;      /* verde del dossier */
+      --brand-2:#98d698;
+      --text:#F2EFEA;
+      --muted:#C9C3BA;
+      --accent:#e7d9c5;
+      --max:1120px;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --gap: clamp(16px, 3vw, 28px);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-2));color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;height:auto;border-radius:12px}
+    .container{max-width:var(--max);margin:auto;padding:0 20px}
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:rgba(15,10,8,.7);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand .mark{width:28px;height:28px;border-radius:50%;background:conic-gradient(from 180deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#112}
+    .brand b{letter-spacing:.5px}
+    .menu{display:flex;gap:18px}
+    .menu a{font-weight:600;opacity:.9}
+    .menu a:hover{opacity:1;color:var(--brand-2)}
+    .btn{display:inline-grid;place-items:center;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,#2b1c14,#21150f);color:var(--text);font-weight:700;box-shadow:var(--shadow)}
+    .btn:hover{border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
+    #burger{display:none}
+    /* Hero */
+    .hero{position:relative;isolation:isolate;overflow:hidden}
+    .hero::before{
+      content:"";position:absolute;inset:-20% -10% auto -10%;height:90vh;
+      background:
+        radial-gradient(60vw 60vw at 10% 20%,rgba(108,193,107,.18),transparent 55%),
+        radial-gradient(50vw 50vw at 90% 10%,rgba(152,214,152,.10),transparent 55%);
+      z-index:-1;filter:saturate(120%);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--gap);align-items:center;padding:clamp(32px,6vw,90px) 0}
+    h1{font-size:clamp(32px,5vw,56px);line-height:1.1;margin:0 0 12px}
+    .eyebrow{color:var(--brand-2);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.82rem}
+    .lead{font-size:clamp(16px,2.2vw,20px);color:var(--muted)}
+    .pill{display:inline-flex;gap:10px;align-items:center;padding:8px 14px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.04)}
+    .figure{border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
+    .figure .map-sim{aspect-ratio:4/3;background:
+      linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.35)),
+      url('hero-paseo-central.jpg') center/cover no-repeat;display:grid;place-items:end}
+    .figure small{padding:10px 14px;background:rgba(0,0,0,.45);margin:10px;border-radius:12px}
+    /* Sections */
+    section{padding: clamp(42px,7vw,96px) 0;border-top:1px solid rgba(255,255,255,.06)}
+    h2{font-size:clamp(24px,3.4vw,36px);margin:0 0 10px}
+    .sub{color:var(--muted);margin:0 0 24px}
+    .grid{display:grid;gap:var(--gap)}
+    .cols-2{grid-template-columns:repeat(2,1fr)}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    .card{background:linear-gradient(180deg,var(--card),#1c120d);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+    .icon{width:26px;height:26px;display:inline-grid;place-items:center;border-radius:8px;background:rgba(108,193,107,.15);margin-right:8px}
+    ul.clean{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .kpi{display:grid;gap:6px}
+    .kpi b{font-size:24px}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(108,193,107,.13);border:1px solid rgba(108,193,107,.35);font-weight:700}
+    /* Availability legend */
+    .legend{display:flex;gap:12px;flex-wrap:wrap}
+    .dot{width:12px;height:12px;border-radius:50%}
+    .ok{background:#5fd38b}
+    .hold{background:#c7b76a}
+    .sold{background:#7aa19a}
+    /* Footer */
+    footer{padding:40px 0;background:#160f0b;border-top:1px solid rgba(255,255,255,.06);color:var(--muted)}
+    /* Drawer (mobile) */
+    @media (max-width: 920px){
+      .hero-grid,.cols-2,.cols-3{grid-template-columns:1fr}
+      #burger{display:inline-grid}
+      .menu{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(20,13,9,.98);padding:16px;border-bottom:1px solid rgba(255,255,255,.08)}
+      .menu.open{display:grid}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Paseo Central">
+        <span class="mark">d</span><b>Paseo Central</b>
+      </a>
+      <nav class="menu" id="nav">
+        <a href="#ubicacion">Ubicación</a>
+        <a href="#proximidades">Proximidades</a>
+        <a href="#infraestructura">Infraestructura</a>
+        <a href="#vida">Estilo de vida</a>
+        <a href="#disponibilidad">Disponibilidad</a>
+        <a href="#desarrolladores">Desarrolladores</a>
+        <a href="#contacto" class="btn">Agendar visita</a>
+      </nav>
+      <button id="burger" class="btn" aria-label="Abrir menú">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="pill eyebrow">Santo Domingo Norte • Av. Ecológica Prof. Juan Bosch</span>
+        <h1>Un nuevo horizonte para el <span style="color:var(--brand)">desarrollo urbano</span></h1>
+        <p class="lead">Proyecto inmobiliario con conexión directa a Av. Jacobo Majluta y Av. Hermanas Mirabal. A pasos del Parque Mirador del Norte, combinando urbanismo y naturaleza.</p>
+        <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+          <a class="btn" href="#contacto">Solicitar información</a>
+          <span class="badge">Áreas verdes: 26,062.33 m²</span>
+          <span class="badge">Tanque: 118,010 gal</span>
+        </div>
+      </div>
+      <figure class="figure">
+        <!-- Reemplaza la imagen por fotografía del proyecto -->
+        <div class="map-sim">
+          <small>Parque Nacional Mirador del Norte — entorno natural</small>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Ubicación -->
+  <section id="ubicacion">
+    <div class="container grid cols-2">
+      <div>
+        <h2>Ubicación estratégica</h2>
+        <p class="sub">Avenida Ecológica Prof. Juan Bosch, con accesos a las arterias principales del municipio y proximidad al pulmón verde de la ciudad.</p>
+        <ul class="clean">
+          <li><span class="icon">📍</span> Conexión a <b>Jacobo Majluta</b> y <b>Hermanas Mirabal</b>.</li>
+          <li><span class="icon">🌳</span> Vecino del <b>Parque Mirador del Norte</b> (área protegida del Cinturón Verde de SD).</li>
+          <li><span class="icon">🗺️</span> Entorno urbano con servicios, comercio y recreación.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 8px">Servicios en un radio de ~15 minutos</h3>
+        <div class="grid cols-2">
+          <div class="kpi"><b>📦</b><span>Plazas y supermercados</span></div>
+          <div class="kpi"><b>🏦</b><span>Bancos y estaciones</span></div>
+          <div class="kpi"><b>🎓</b><span>Colegios y universidades</span></div>
+          <div class="kpi"><b>⚽</b><span>Parques y esparcimiento</span></div>
+        </div>
+        <p style="margin-top:12px;color:var(--muted)">Los tiempos referenciales incluyen conexiones a Circunvalación SD, Aeropuerto La Isabela y Centro Olímpico.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proximidades (ejemplos visibles) -->
+  <section id="proximidades">
+    <div class="container">
+      <h2>Proximidades</h2>
+      <p class="sub">Conectividad hacia puntos clave de Santo Domingo Norte y la ciudad.</p>
+      <div class="grid cols-3">
+        <div class="card"><b>Centro Olímpico</b><br/><small>12 min — 7.6 km</small></div>
+        <div class="card"><b>Av. Charles de Gaulle</b><br/><small>10 min — 10.3 km</small></div>
+        <div class="card"><b>Circunvalación SD</b><br/><small>14 min — 12.6 km</small></div>
+        <div class="card"><b>Aeropuerto Int. La Isabela</b><br/><small>26 min — 8.8 km</small></div>
+        <div class="card"><b>Parque Mirador Norte</b><br/><small>Acceso directo</small></div>
+        <div class="card"><b>Zonas comerciales</b><br/><small>8–18 min</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infraestructura -->
+  <section id="infraestructura">
+    <div class="container">
+      <h2>Infraestructura de calidad</h2>
+      <p class="sub">Entrega con urbanización completa para elevar la calidad de vida y la sostenibilidad.</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="icon">🚰</div>
+          <b>Agua potable</b>
+          <p>Conexión por solar + tanque elevado de <b>118,010 gal</b>, caseta de cloración y dos pozos.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧭</div>
+          <b>Calles asfaltadas</b>
+          <p>Accesos seguros y fluidez vial en todo el trazado del proyecto.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧱</div>
+          <b>Alcantarillado sanitario</b>
+          <p>Acometida individual y <b>5 plantas</b> de tratamiento de aguas residuales.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⚡</div>
+          <b>Tendido eléctrico</b>
+          <p>Dimensionado para cubrir la demanda comunitaria.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌿</div>
+          <b>Áreas verdes</b>
+          <p>Más de <b>26,062.33 m²</b> para recreación y contacto con la naturaleza.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🛡️</div>
+          <b>Proyecto cerrado</b>
+          <p>Control de accesos vehiculares y peatonales; visibilidad e iluminación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estilo de vida -->
+  <section id="vida">
+    <div class="container grid cols-2">
+      <div>
+        <h2>El estilo de vida que mereces</h2>
+        <p class="sub">Tranquilidad, salud y conexión con el entorno.</p>
+        <ul class="clean">
+          <li><span class="icon">🚶</span>Senderos peatonales y zonas de contemplación.</li>
+          <li><span class="icon">🚴</span>Ciclorutas para conectar áreas verdes (a cargo del constructor).</li>
+          <li><span class="icon">🎯</span>Zonas recreativas y de socialización para toda la familia.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <b>Opciones de edificación</b>
+        <ul class="clean" style="margin-top:8px">
+          <li>Primera línea: <b>+5 niveles</b> con vistas al parque.</li>
+          <li>Intermedias: <b>hasta 4 niveles</b>.</li>
+          <li>Residencial baja: <b>hasta 2 niveles</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disponibilidad -->
+  <section id="disponibilidad">
+    <div class="container">
+      <h2>Disponibilidad de solares</h2>
+      <p class="sub">Proyecto en ejecución por etapas. Cada solar deslindado y con certificado de título a nombre de Paseo Central, S.R.L.</p>
+      <div class="legend" role="list" aria-label="Leyenda de disponibilidad">
+        <span class="badge"><span class="dot ok"></span>Disponibles</span>
+        <span class="badge"><span class="dot hold"></span>Apartados</span>
+        <span class="badge"><span class="dot sold"></span>Vendidos</span>
+      </div>
+
+      <div class="grid cols-3" style="margin-top:18px">
+        <div class="card">
+          <b>Seguridad jurídica</b>
+          <p>Permisología en proceso, certificados individuales y ejecución por etapas para respaldo del inversionista.</p>
+        </div>
+        <div class="card">
+          <b>Plan de pago (referencial)</b>
+          <ul class="clean">
+            <li>Reserva.</li>
+            <li>50% a la firma (15 días).</li>
+            <li>40% contra pago total.</li>
+          </ul>
+          <small style="color:var(--muted)">Separación no reembolsable. Costos de transferencia a cargo del cliente.</small>
+        </div>
+        <div class="card">
+          <b>Tipología de manzanas</b>
+          <p>Usos para vivienda unifamiliar, apartamentos, comercio y oficinas según frentes y alturas por zona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desarrolladores -->
+  <section id="desarrolladores">
+    <div class="container grid cols-2">
+      <div>
+        <h2>Sobre los desarrolladores</h2>
+        <p class="sub">Grupo con trayectoria en Santo Domingo Norte: “Las Palmeras”, “Altos del Parque” y “Paseo del Parque” (colindante).</p>
+        <p>Paseo Central es una oportunidad para sumarse al crecimiento ordenado de la zona, con calidad, conectividad y armonía con el entorno.</p>
+      </div>
+      <div class="card">
+        <b>Propuesta de valor</b>
+        <ul class="clean">
+          <li>Ubicación privilegiada y cercanía a un área protegida.</li>
+          <li>Urbanismo moderno e infraestructura completa.</li>
+          <li>Escalabilidad del proyecto por etapas.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Contacto -->
+  <section id="contacto">
+    <div class="container grid cols-2">
+      <div>
+        <h2>Agenda tu visita</h2>
+        <p class="sub">Elige una inversión con visión de futuro, elige Paseo Central.</p>
+        <form class="card" id="form">
+          <label>Nombre<br/><input required name="nombre" placeholder="Tu nombre" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
+          <label>Correo<br/><input required type="email" name="correo" placeholder="tucorreo@ejemplo.com" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
+          <label>Teléfono<br/><input required name="telefono" placeholder="+1 (809) ..." style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></label><br/>
+          <label>Mensaje<br/><textarea name="mensaje" rows="4" placeholder="Quiero información de disponibilidad y precios." style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#120c09;color:var(--text)"></textarea></label><br/>
+          <button class="btn" type="submit">Enviar consulta</button>
+          <p id="status" aria-live="polite" style="margin:10px 0 0;color:var(--brand-2)"></p>
+        </form>
+      </div>
+      <div class="card">
+        <b>Contacto</b>
+        <p class="sub" style="margin-top:6px">Paseo Central, S.R.L.</p>
+        <ul class="clean">
+          <li>📞 <a href="tel:+18095551234">(809) 555-1234</a></li>
+          <li>✉️ <a href="mailto:info@paseocentral.do">info@paseocentral.do</a></li>
+          <li>📍 Santo Domingo Norte, República Dominicana</li>
+          <li>🗓️ <a href="https://www.ejemplo.com.do" target="_blank" rel="noopener">Agendar cita</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <small>© <span id="y"></span> Paseo Central — Todos los derechos reservados.</small>
+        <small>Diseño web base por OSCARLEON</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Menú móvil
+    const nav = document.getElementById('nav');
+    document.getElementById('burger').addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    // Scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(el){
+          e.preventDefault();
+          window.scrollTo({top: el.offsetTop-60, behavior:'smooth'});
+          nav.classList.remove('open');
+        }
+      })
+    });
+
+    // Simulación envío (reemplazar por integración real)
+    const form = document.getElementById('form');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Aquí podrías hacer fetch() a tu backend/automation
+      document.getElementById('status').textContent = "¡Gracias! Hemos recibido tu consulta y te contactaremos pronto.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
